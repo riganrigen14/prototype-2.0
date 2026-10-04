@@ -176,6 +176,15 @@
 </div>
 
 <script>
+    // Cek apakah siswa sudah absen hari ini saat halaman dimuat
+        const todayDate = new Date().toLocaleDateString('id-ID');
+        if (localStorage.getItem('lastAbsenDate') === todayDate) {
+            document.getElementById('absenForm').innerHTML = `
+                <div style="text-align: center; color: #0a1b54; font-weight: bold; padding: 20px 0;">
+                    <p>✅ Anda sudah mengisi presensi hari ini.</p>
+                    <p style="font-size: 12px; color: #666;">Silakan kembali lagi besok.</p>
+                </div>`;
+        }
     document.getElementById('foto').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -233,6 +242,7 @@
                     alert("✅ Berhasil! Data kehadiran Anda sudah tersimpan.");
                     document.getElementById('absenForm').reset();
                     document.getElementById('preview').style.display = 'none';
+                    localStorage.setItem('lastAbsenDate', todayDate);
                 } else {
                     alert("❌ Error: " + result.message);
                 }
